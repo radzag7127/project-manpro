@@ -32,6 +32,15 @@ interface Property {
   spiritual: boolean
 }
 
+interface PropertyFilters {
+  type?: string;
+  location?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  traditional?: boolean;
+  spiritual?: boolean;
+}
+
 const properties: Property[] = [
   { id: '1', title: 'Modern Apartment in Jakarta', price: 500000000, location: 'Jakarta', type: 'Apartment', imageUrl: '/placeholder.svg?height=200&width=300', description: 'Sleek and modern apartment in the heart of Jakarta.', rating: 4.5, traditional: false, spiritual: false },
   { id: '2', title: 'Traditional Balinese Villa', price: 2000000000, location: 'Bali', type: 'Villa', imageUrl: '/placeholder.svg?height=200&width=300', description: 'Experience the beauty of Balinese culture in this traditional villa.', rating: 4.8, traditional: true, spiritual: true },
@@ -56,8 +65,8 @@ export default function ListingsPage() {
     setFilteredProperties(sorted)
   }
 
-  const applyFilters = (filters: any) => {
-    let filtered = properties.filter(property => 
+  const applyFilters = (filters: PropertyFilters) => {
+    const filtered = properties.filter(property => 
       (!filters.type || property.type === filters.type) &&
       (!filters.location || property.location === filters.location) &&
       (!filters.minPrice || property.price >= filters.minPrice) &&
@@ -136,11 +145,14 @@ export default function ListingsPage() {
                   </div>
                   <div className="space-y-2">
                     <div className="flex items-center space-x-2">
-                      <Checkbox id="traditional" onCheckedChange={(checked) => applyFilters({ traditional: checked })} />
+                      <Checkbox 
+                        id="traditional" 
+                        onCheckedChange={(checked) => applyFilters({ traditional: checked === true })} 
+                      />
                       <label htmlFor="traditional">Traditional</label>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <Checkbox id="spiritual" onCheckedChange={(checked) => applyFilters({ spiritual: checked })} />
+                      <Checkbox id="spiritual" onCheckedChange={(checked) => applyFilters({ spiritual: checked === true })} />
                       <label htmlFor="spiritual">Spiritual</label>
                     </div>
                   </div>
