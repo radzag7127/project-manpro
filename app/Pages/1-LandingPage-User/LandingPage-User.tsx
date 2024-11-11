@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Search, Home, Building, MapPin } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
+import { UserCircle } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -59,7 +60,7 @@ const featuredProperties: Property[] = [
   },
 ];
 
-export default function Homepage() {
+export default function HomepageUser() {
   const router = useRouter();
   const [searchLocation, setSearchLocation] = useState("");
   const [propertyType, setPropertyType] = useState("");
@@ -94,10 +95,10 @@ export default function Homepage() {
               </li>
               <li>
                 <Link
-                  href="/routes/authentification"
-                  className="hover:underline"
+                  href="/routes/user-profile-seller"
+                  className="hover:underline flex items-center"
                 >
-                  Login
+                  <UserCircle size={24} />
                 </Link>
               </li>
             </ul>
