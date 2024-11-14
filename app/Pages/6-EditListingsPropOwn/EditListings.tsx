@@ -1,117 +1,131 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { Upload, X, Save } from 'lucide-react'
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { Megaphone, X, Save, ImagePlus } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Label } from "@/components/ui/label"
-import { Select } from "@/components/ui/select"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { toast } from "@/components/ui/use-toast"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useToast } from "@/hooks/use-toast";
+import HeaderComponent from "../0-PageProperties/Header";
 
 interface ListingData {
-  id: string
-  title: string
-  description: string
-  price: string
-  location: string
-  propertyType: string
-  bedrooms: string
-  bathrooms: string
-  specialAttributes: string
-  images: string[]
-  status: 'active' | 'sold' | 'pending'
+  id: string;
+  title: string;
+  description: string;
+  price: string;
+  location: string;
+  propertyType: string;
+  bedrooms: string;
+  bathrooms: string;
+  specialAttributes: string;
+  images: string[];
+  status: "active" | "sold" | "pending";
 }
 
 // Mock data for the existing listing
 const mockListingData: ListingData = {
-  id: '1',
-  title: 'Luxurious Villa with Ocean View',
-  description: 'Experience the epitome of luxury living in this stunning ocean-view villa. Nestled in the heart of Bali, this property offers breathtaking panoramas, world-class amenities, and unparalleled comfort.',
-  price: '5000000000',
-  location: 'Bali, Indonesia',
-  propertyType: 'villa',
-  bedrooms: '5',
-  bathrooms: '6',
-  specialAttributes: 'Ocean view, private pool, traditional Balinese architecture',
+  id: "1",
+  title: "Luxurious Villa with Ocean View",
+  description:
+    "Experience the epitome of luxury living in this stunning ocean-view villa. Nestled in the heart of Bali, this property offers breathtaking panoramas, world-class amenities, and unparalleled comfort.",
+  price: "5000000000",
+  location: "Bali, Indonesia",
+  propertyType: "villa",
+  bedrooms: "5",
+  bathrooms: "6",
+  specialAttributes:
+    "Ocean view, private pool, traditional Balinese architecture",
   images: [
-    '/placeholder.svg?height=400&width=600',
-    '/placeholder.svg?height=400&width=600',
-    '/placeholder.svg?height=400&width=600',
+    "/placeholder.svg?height=400&width=600",
+    "/placeholder.svg?height=400&width=600",
+    "/placeholder.svg?height=400&width=600",
   ],
-  status: 'active',
-}
+  status: "active",
+};
 
-export function BlockPage() {
-  const [formData, setFormData] = useState<ListingData>(mockListingData)
-  const [isDirty, setIsDirty] = useState(false)
+export function EditUploadedListings() {
+  const [formData, setFormData] = useState<ListingData>(mockListingData);
+  const [isDirty, setIsDirty] = useState(false);
+  const { toast } = useToast();
 
   useEffect(() => {
     // In a real application, you would fetch the listing data here
     // For now, we're using the mock data
-    setFormData(mockListingData)
-  }, [])
+    setFormData(mockListingData);
+  }, []);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
-    setFormData(prev => ({ ...prev, [name]: value }))
-    setIsDirty(true)
-  }
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    setIsDirty(true);
+  };
 
-  const handleStatusChange = (value: 'active' | 'sold' | 'pending') => {
-    setFormData(prev => ({ ...prev, status: value }))
-    setIsDirty(true)
-  }
+  const handleStatusChange = (value: "active" | "sold" | "pending") => {
+    setFormData((prev) => ({ ...prev, status: value }));
+    setIsDirty(true);
+  };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files
+    const files = e.target.files;
     if (files) {
-      const newImages = Array.from(files).map(file => URL.createObjectURL(file))
-      setFormData(prev => ({ ...prev, images: [...prev.images, ...newImages] }))
-      setIsDirty(true)
+      const newImages = Array.from(files).map((file) =>
+        URL.createObjectURL(file)
+      );
+      setFormData((prev) => ({
+        ...prev,
+        images: [...prev.images, ...newImages],
+      }));
+      setIsDirty(true);
     }
-  }
+  };
 
   const removeImage = (index: number) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      images: prev.images.filter((_, i) => i !== index)
-    }))
-    setIsDirty(true)
-  }
+      images: prev.images.filter((_, i) => i !== index),
+    }));
+    setIsDirty(true);
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     // Here you would typically send the updated form data to your backend
-    console.log('Updated listing data:', formData)
+    console.log("Updated listing data:", formData);
     toast({
       title: "Changes saved",
       description: "Your listing has been updated successfully.",
-    })
-    setIsDirty(false)
-  }
+    });
+    setIsDirty(false);
+  };
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="bg-primary text-primary-foreground py-4">
-        <div className="container mx-auto flex justify-between items-center">
-          <Link href="/" className="text-2xl font-bold">Rumaku</Link>
-          <nav>
-            <ul className="flex space-x-4">
-              <li><Link href="/routes/listings" className="hover:underline">Listings</Link></li>
-              <li><Link href="/about" className="hover:underline">About</Link></li>
-              <li><Link href="/contact" className="hover:underline">Contact</Link></li>
-              <li><Link href="/login" className="hover:underline">Login</Link></li>
-            </ul>
-          </nav>
-        </div>
-      </header>
+      <HeaderComponent />
 
       <main className="container mx-auto py-8">
         <h1 className="text-3xl font-bold mb-8">Edit Listing</h1>
@@ -120,7 +134,9 @@ export function BlockPage() {
           <Card>
             <CardHeader>
               <CardTitle>Property Details</CardTitle>
-              <CardDescription>Update the information about your property</CardDescription>
+              <CardDescription>
+                Update the information about your property
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
@@ -170,16 +186,23 @@ export function BlockPage() {
                 <div className="space-y-2">
                   <Label htmlFor="propertyType">Property Type</Label>
                   <Select
-                    id="propertyType"
                     name="propertyType"
                     value={formData.propertyType}
-                    onChange={handleInputChange}
-                    required
+                    onValueChange={(value) => {
+                      handleInputChange({
+                        target: { name: "propertyType", value },
+                      } as any);
+                    }}
                   >
-                    <option value="house">House</option>
-                    <option value="apartment">Apartment</option>
-                    <option value="villa">Villa</option>
-                    <option value="land">Land</option>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select property type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="house">House</SelectItem>
+                      <SelectItem value="apartment">Apartment</SelectItem>
+                      <SelectItem value="villa">Villa</SelectItem>
+                      <SelectItem value="land">Land</SelectItem>
+                    </SelectContent>
                   </Select>
                 </div>
                 <div className="space-y-2">
@@ -220,13 +243,21 @@ export function BlockPage() {
           <Card>
             <CardHeader>
               <CardTitle>Property Images</CardTitle>
-              <CardDescription>Update or add new images of your property (max 10 images)</CardDescription>
+              <CardDescription>
+                Update or add new images of your property (max 10 images)
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {formData.images.map((image, index) => (
                   <div key={index} className="relative">
-                    <Image src={image} alt={`Property image ${index + 1}`} width={200} height={150} className="rounded-lg object-cover w-full h-36" />
+                    <Image
+                      src={image}
+                      alt={`Property image ${index + 1}`}
+                      width={200}
+                      height={150}
+                      className="rounded-lg object-cover w-full h-36"
+                    />
                     <button
                       type="button"
                       onClick={() => removeImage(index)}
@@ -239,8 +270,10 @@ export function BlockPage() {
                 ))}
                 {formData.images.length < 10 && (
                   <label className="border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center h-36 cursor-pointer hover:border-primary">
-                    <Upload className="h-8 w-8 text-gray-400" />
-                    <span className="mt-2 text-sm text-gray-500">Upload Image</span>
+                    <ImagePlus className="h-8 w-8 text-gray-400" />
+                    <span className="mt-2 text-sm text-gray-500">
+                      Upload Image
+                    </span>
                     <Input
                       type="file"
                       accept="image/*"
@@ -257,10 +290,16 @@ export function BlockPage() {
           <Card>
             <CardHeader>
               <CardTitle>Listing Status</CardTitle>
-              <CardDescription>Update the current status of your listing</CardDescription>
+              <CardDescription>
+                Update the current status of your listing
+              </CardDescription>
             </CardHeader>
             <CardContent>
-              <RadioGroup value={formData.status} onValueChange={handleStatusChange} className="flex space-x-4">
+              <RadioGroup
+                value={formData.status}
+                onValueChange={handleStatusChange}
+                className="flex space-x-4"
+              >
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="active" id="active" />
                   <Label htmlFor="active">Active</Label>
@@ -278,12 +317,22 @@ export function BlockPage() {
           </Card>
 
           <div className="flex justify-between items-center">
-            <Button type="submit" disabled={!isDirty}>
-              <Save className="h-4 w-4 mr-2" />
-              Save Changes
-            </Button>
+            <div className="flex gap-4">
+              <Button type="submit" disabled={!isDirty}>
+                <Save className="h-4 w-4 mr-2" />
+                Save Changes
+              </Button>
+              <Button type="button" variant="secondary" asChild>
+                <Link href={`/routes/promotion-listing-propown/${formData.id}`}>
+                  <Megaphone className="h-4 w-4 mr-2" />
+                  Promote Listing
+                </Link>
+              </Button>
+            </div>
             {isDirty && (
-              <p className="text-sm text-yellow-600">You have unsaved changes</p>
+              <p className="text-sm text-yellow-600">
+                You have unsaved changes
+              </p>
             )}
           </div>
         </form>
@@ -293,12 +342,18 @@ export function BlockPage() {
         <div className="container mx-auto text-center">
           <p>&copy; 2024 Rumaku. All rights reserved.</p>
           <div className="mt-4">
-            <Link href="/terms" className="hover:underline mr-4">Terms of Service</Link>
-            <Link href="/privacy" className="hover:underline mr-4">Privacy Policy</Link>
-            <Link href="/contact" className="hover:underline">Contact Us</Link>
+            <Link href="/terms" className="hover:underline mr-4">
+              Terms of Service
+            </Link>
+            <Link href="/privacy" className="hover:underline mr-4">
+              Privacy Policy
+            </Link>
+            <Link href="/contact" className="hover:underline">
+              Contact Us
+            </Link>
           </div>
         </div>
       </footer>
     </div>
-  )
+  );
 }

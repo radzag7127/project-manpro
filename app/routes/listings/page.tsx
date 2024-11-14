@@ -1,6 +1,7 @@
-import ListingsPage from "../../Pages/2-Listings/Listings";
+"use client";
 
+import { ListingPageMVPs } from "@/app/Pages/00-ListingPage/ListingPageMVP";
 
 export default function ListingsRoute() {
-  return <ListingsPage/>
+  return <ListingPageMVPs />;
 }

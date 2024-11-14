@@ -1,8 +1,7 @@
-'use client'
+"use client";
 
-import { Authentification } from "@/app/Pages/5-LoginAndRegistration/Authentification"
+import { Authentications } from "@/app/Pages/0-LoginAndRegistration/Authentification";
 
 export default function AuthPage() {
-  return <Authentification />
+  return <Authentications />;
 }
-  

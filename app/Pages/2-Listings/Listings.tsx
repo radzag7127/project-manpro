@@ -25,6 +25,9 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
+import { Footer } from "../0-PageProperties/Footer";
+import HeaderComponents from "../0-PageProperties/Header";
+
 interface Property {
   id: string;
   title: string;
@@ -153,38 +156,7 @@ export default function ListingsPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="bg-primary text-primary-foreground py-4">
-        <div className="container mx-auto flex justify-between items-center">
-          <Link href="/" className="text-2xl font-bold">
-            Rumaku
-          </Link>
-          <nav>
-            <ul className="flex space-x-4">
-              <li>
-                <Link href="/listings" className="hover:underline">
-                  Listings
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="hover:underline">
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="hover:underline">
-                  Contact
-                </Link>
-              </li>
-              <li>
-                <Link href="/login" className="hover:underline">
-                  Login
-                </Link>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </header>
-
+      <HeaderComponents />
       <main className="container mx-auto py-8">
         <h1 className="text-3xl font-bold mb-8">Property Listings</h1>
 
@@ -323,23 +295,7 @@ export default function ListingsPage() {
           ))}
         </div>
       </main>
-
-      <footer className="bg-primary text-primary-foreground py-8 mt-12">
-        <div className="container mx-auto text-center">
-          <p>&copy; 2024 Rumaku. All rights reserved.</p>
-          <div className="mt-4">
-            <Link href="/terms" className="hover:underline mr-4">
-              Terms of Service
-            </Link>
-            <Link href="/privacy" className="hover:underline mr-4">
-              Privacy Policy
-            </Link>
-            <Link href="/contact" className="hover:underline">
-              Contact Us
-            </Link>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

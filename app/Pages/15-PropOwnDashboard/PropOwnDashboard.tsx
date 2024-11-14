@@ -2,7 +2,17 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Star, Check, Edit, Home, Building, MapPin, Plus } from "lucide-react";
+import {
+  Star,
+  Check,
+  Edit,
+  Home,
+  Building,
+  MapPin,
+  Plus,
+  Megaphone,
+} from "lucide-react";
+import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -27,6 +37,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import HeaderComponents from "../0-PageProperties/Header";
+import { Footer } from "../0-PageProperties/Footer";
+import { PropOwnChatBubble } from "./PropOwnChatBubble";
 
 interface Review {
   id: string;
@@ -43,6 +56,7 @@ interface Listing {
   location: string;
   type: string;
   status: "active" | "sold" | "inactive";
+  image: string;
 }
 
 interface User {
@@ -61,13 +75,13 @@ interface User {
 
 const user: User = {
   id: "1",
-  name: "Jane Doe",
-  email: "jane@example.com",
-  avatar: "/placeholder.svg?height=100&width=100",
+  name: "Budi Santoso",
+  email: "Budi@example.com",
+  avatar: "/male1.jpg",
   userType: "seller",
   verified: true,
   joinDate: "2023-01-15",
-  bio: "Experienced real estate agent specializing in luxury properties in Bali.",
+  bio: "Experienced property owner with a passion for providing high-quality living spaces in Jakarta. I take pride in maintaining my properties to the highest standards and ensuring tenant satisfaction.",
   rating: 4.8,
   reviews: [
     {
@@ -94,6 +108,7 @@ const user: User = {
       location: "Ubud, Bali",
       type: "Villa",
       status: "active",
+      image: "/prop1.jpg",
     },
     {
       id: "l2",
@@ -102,6 +117,7 @@ const user: User = {
       location: "Seminyak, Bali",
       type: "Apartment",
       status: "sold",
+      image: "/prop2.jpg",
     },
     {
       id: "l3",
@@ -110,11 +126,12 @@ const user: User = {
       location: "Canggu, Bali",
       type: "House",
       status: "inactive",
+      image: "/prop3.jpg",
     },
   ],
 };
 
-export function UserAsSeller() {
+export function UserAsSellers() {
   const [isEditing, setIsEditing] = useState(false);
   const [editedUser, setEditedUser] = useState(user);
 
@@ -134,37 +151,7 @@ export function UserAsSeller() {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="bg-primary text-primary-foreground py-4">
-        <div className="container mx-auto flex justify-between items-center">
-          <Link href="/" className="text-2xl font-bold">
-            Rumaku
-          </Link>
-          <nav>
-            <ul className="flex space-x-4">
-              <li>
-                <Link href="/routes/listings" className="hover:underline">
-                  Listings
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="hover:underline">
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="hover:underline">
-                  Contact
-                </Link>
-              </li>
-              <li>
-                <Link href="/login" className="hover:underline">
-                  Login
-                </Link>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </header>
+      <HeaderComponents />
 
       <main className="container mx-auto py-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -184,30 +171,32 @@ export function UserAsSeller() {
                     <Edit className="h-4 w-4" />
                   </Button>
                 </div>
-                <CardTitle>{user.name}</CardTitle>
-                <CardDescription>
-                  {user.userType === "buyer" ? "Buyer" : "Seller"}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-2">
-                  <div className="flex items-center">
-                    <Star className="h-4 w-4 fill-yellow-400 text-yellow-400 mr-1" />
-                    <span>
-                      {user.rating.toFixed(1)} ({user.reviews.length} reviews)
-                    </span>
-                  </div>
+                <div className="mt-4">
+                  <h2 className="text-2xl font-bold">{user.name}</h2>
+                  <p className="text-muted-foreground">{user.email}</p>
                   {user.verified && (
-                    <div className="flex items-center text-green-600">
-                      <Check className="h-4 w-4 mr-1" />
-                      <span>Verified User</span>
+                    <div className="flex items-center text-green-600 mt-1">
+                      <Check className="h-4 w-4 mr-1" /> Verified Seller
                     </div>
                   )}
-                  <p className="text-sm text-muted-foreground">
-                    Member since {user.joinDate}
-                  </p>
                 </div>
-                <p className="mt-4">{user.bio}</p>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="flex items-center">
+                    <Star className="h-4 w-4 fill-yellow-400 text-yellow-400 mr-1" />
+                    <span className="font-semibold">{user.rating}</span>
+                    <span className="text-muted-foreground ml-2">
+                      ({user.reviews.length} reviews)
+                    </span>
+                  </div>
+                  <p>{user.bio}</p>
+                  <Button asChild className="w-full">
+                    <Link href="/routes/property-owner-profile-promote">
+                      <Megaphone className="mr-2 h-4 w-4" /> Promote Profile
+                    </Link>
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           </div>
@@ -240,37 +229,49 @@ export function UserAsSeller() {
                         key={listing.id}
                         className="mb-8 pb-6 border-b last:border-b-0 relative p-4 hover:bg-accent/50 rounded-lg"
                       >
-                        <div className="absolute top-2 right-2">
-                          <Link href={`/routes/edit-listings/${listing.id}`}>
-                            <Button variant="ghost" size="icon">
-                              <Edit className="h-4 w-4" />
-                            </Button>
-                          </Link>
-                        </div>
-                        <h3 className="font-semibold text-lg mb-3">
-                          {listing.title}
-                        </h3>
-                        <p className="text-primary font-bold text-xl mb-3">
-                          {formatPrice(listing.price)}
-                        </p>
-                        <div className="flex items-center text-sm text-muted-foreground mb-3">
-                          <MapPin className="h-4 w-4 mr-1" />
-                          {listing.location}
-                        </div>
-                        <div className="flex justify-between items-center mt-3">
-                          <span className="text-sm">{listing.type}</span>
-                          <span
-                            className={`text-sm font-semibold ${
-                              listing.status === "active"
-                                ? "text-green-600"
-                                : listing.status === "sold"
-                                ? "text-blue-600"
-                                : "text-gray-600"
-                            }`}
-                          >
-                            {listing.status.charAt(0).toUpperCase() +
-                              listing.status.slice(1)}
-                          </span>
+                        <div className="flex gap-4">
+                          <div className="relative w-24 h-24">
+                            <Image
+                              src={listing.image}
+                              alt={listing.title}
+                              fill
+                              className="object-cover rounded-lg"
+                            />
+                          </div>
+                          <div className="flex-1">
+                            <div className="absolute top-2 right-2">
+                              <Link href={`/routes/edit-listings`}>
+                                <Button variant="ghost" size="icon">
+                                  <Edit className="h-4 w-4" />
+                                </Button>
+                              </Link>
+                            </div>
+                            <h3 className="font-semibold text-lg mb-3">
+                              {listing.title}
+                            </h3>
+                            <p className="text-primary font-bold text-xl mb-3">
+                              {formatPrice(listing.price)}
+                            </p>
+                            <div className="flex items-center text-sm text-muted-foreground mb-3">
+                              <MapPin className="h-4 w-4 mr-1" />
+                              {listing.location}
+                            </div>
+                            <div className="flex justify-between items-center mt-3">
+                              <span className="text-sm">{listing.type}</span>
+                              <span
+                                className={`text-sm font-semibold ${
+                                  listing.status === "active"
+                                    ? "text-green-600"
+                                    : listing.status === "sold"
+                                    ? "text-blue-600"
+                                    : "text-gray-600"
+                                }`}
+                              >
+                                {listing.status.charAt(0).toUpperCase() +
+                                  listing.status.slice(1)}
+                              </span>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     ))}
@@ -391,23 +392,8 @@ export function UserAsSeller() {
           </form>
         </DialogContent>
       </Dialog>
-
-      <footer className="bg-primary text-primary-foreground py-8 mt-12">
-        <div className="container mx-auto text-center">
-          <p>&copy; 2024 Rumaku. All rights reserved.</p>
-          <div className="mt-4">
-            <Link href="/terms" className="hover:underline mr-4">
-              Terms of Service
-            </Link>
-            <Link href="/privacy" className="hover:underline mr-4">
-              Privacy Policy
-            </Link>
-            <Link href="/contact" className="hover:underline">
-              Contact Us
-            </Link>
-          </div>
-        </div>
-      </footer>
+      <Footer />
+      <PropOwnChatBubble />
     </div>
   );
 }

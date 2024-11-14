@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Upload, X, Eye } from "lucide-react";
+import { Upload, X, Eye, Megaphone } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -28,6 +28,15 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import HeaderComponents from "../0-PageProperties/Header";
+import { Footer } from "../0-PageProperties/Footer";
+import { Badge } from "@/components/ui/badge";
+
+interface PropertyAttribute {
+  id: string;
+  category: string;
+  label: string;
+}
 
 interface ListingFormData {
   title: string;
@@ -37,11 +46,54 @@ interface ListingFormData {
   propertyType: string;
   bedrooms: string;
   bathrooms: string;
-  specialAttributes: string;
+  selectedAttributes: string[];
+  customAttributes: string;
   images: string[];
 }
 
 export function AddListings() {
+  const propertyAttributes: Record<string, PropertyAttribute[]> = {
+    fengshui: [
+      { id: "fs1", category: "fengshui", label: "Good Direction" },
+      { id: "fs2", category: "fengshui", label: "Positive Energy Flow" },
+      { id: "fs3", category: "fengshui", label: "Balanced Layout" },
+      { id: "fs4", category: "fengshui", label: "Mountain Facing" },
+      { id: "fs5", category: "fengshui", label: "Water Element" },
+    ],
+    religious: [
+      { id: "r1", category: "religious", label: "Kiblat Direction" },
+      { id: "r2", category: "religious", label: "Prayer Room" },
+      { id: "r3", category: "religious", label: "Near Mosque" },
+      { id: "r4", category: "religious", label: "Near Temple" },
+    ],
+    amenities: [
+      { id: "am1", category: "amenities", label: "Swimming Pool" },
+      { id: "am2", category: "amenities", label: "Gym" },
+      { id: "am3", category: "amenities", label: "Garden" },
+      { id: "am4", category: "amenities", label: "Parking" },
+    ],
+    views: [
+      { id: "v1", category: "views", label: "Ocean View" },
+      { id: "v2", category: "views", label: "Mountain View" },
+      { id: "v3", category: "views", label: "City View" },
+    ],
+    security: [
+      { id: "s1", category: "security", label: "24/7 Security" },
+      { id: "s2", category: "security", label: "CCTV" },
+      { id: "s3", category: "security", label: "Access Card" },
+    ],
+    accessibility: [
+      { id: "ac1", category: "accessibility", label: "Wheelchair Friendly" },
+      { id: "ac2", category: "accessibility", label: "Elevator Access" },
+      { id: "ac3", category: "accessibility", label: "Wide Doorways" },
+    ],
+    sustainability: [
+      { id: "su1", category: "sustainability", label: "Solar Panels" },
+      { id: "su2", category: "sustainability", label: "Rainwater Harvesting" },
+      { id: "su3", category: "sustainability", label: "Energy Efficient" },
+    ],
+  };
+
   const [formData, setFormData] = useState<ListingFormData>({
     title: "",
     description: "",
@@ -50,10 +102,12 @@ export function AddListings() {
     propertyType: "",
     bedrooms: "",
     bathrooms: "",
-    specialAttributes: "",
+    selectedAttributes: [],
+    customAttributes: "",
     images: [],
   });
   const [previewOpen, setPreviewOpen] = useState(false);
+  const [searchAttribute, setSearchAttribute] = useState("");
 
   const handleInputChange = (
     e: React.ChangeEvent<
@@ -91,40 +145,18 @@ export function AddListings() {
     // Reset form or redirect user after successful submission
   };
 
+  const handleAttributeToggle = (attributeId: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      selectedAttributes: prev.selectedAttributes.includes(attributeId)
+        ? prev.selectedAttributes.filter((id) => id !== attributeId)
+        : [...prev.selectedAttributes, attributeId],
+    }));
+  };
+
   return (
     <div className="min-h-screen bg-background">
-      <header className="bg-primary text-primary-foreground py-4">
-        <div className="container mx-auto flex justify-between items-center">
-          <Link href="/" className="text-2xl font-bold">
-            Rumaku
-          </Link>
-          <nav>
-            <ul className="flex space-x-4">
-              <li>
-                <Link href="/routes/listings" className="hover:underline">
-                  Listings
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="hover:underline">
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="hover:underline">
-                  Contact
-                </Link>
-              </li>
-              <li>
-                <Link href="/login" className="hover:underline">
-                  Login
-                </Link>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </header>
-
+      <HeaderComponents />
       <main className="container mx-auto py-8">
         <h1 className="text-3xl font-bold mb-8">Post New Listing</h1>
 
@@ -236,17 +268,91 @@ export function AddListings() {
                       />
                     </div>
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="specialAttributes">
-                      Special Attributes
-                    </Label>
-                    <Textarea
-                      id="specialAttributes"
-                      name="specialAttributes"
-                      value={formData.specialAttributes}
-                      onChange={handleInputChange}
-                      placeholder="e.g., Ocean view, private pool, traditional architecture..."
-                    />
+                  <div className="flex justify-start mb-4">
+                    <Button variant="outline" asChild>
+                      <Link href="/routes/listing-promotion">
+                        <Megaphone className="h-4 w-4 mr-2" />
+                        Promotion Options
+                      </Link>
+                    </Button>
+                  </div>
+                  <div className="space-y-4">
+                    <Label>Property Attributes</Label>
+
+                    <div className="space-y-2">
+                      <Input
+                        placeholder="Search attributes..."
+                        value={searchAttribute}
+                        onChange={(e) => setSearchAttribute(e.target.value)}
+                        className="mb-4"
+                      />
+
+                      <div className="max-h-[400px] overflow-y-auto space-y-6 pr-4">
+                        {Object.entries(propertyAttributes)
+                          .filter(
+                            ([category, attributes]) =>
+                              searchAttribute === "" ||
+                              category
+                                .toLowerCase()
+                                .includes(searchAttribute.toLowerCase()) ||
+                              attributes.some((attr) =>
+                                attr.label
+                                  .toLowerCase()
+                                  .includes(searchAttribute.toLowerCase())
+                              )
+                          )
+                          .map(([category, attributes]) => (
+                            <div key={category} className="space-y-2">
+                              <h3 className="text-lg font-semibold capitalize sticky top-0 bg-background py-2">
+                                {category}
+                              </h3>
+                              <div className="flex flex-wrap gap-2">
+                                {attributes
+                                  .filter(
+                                    (attr) =>
+                                      searchAttribute === "" ||
+                                      attr.label
+                                        .toLowerCase()
+                                        .includes(searchAttribute.toLowerCase())
+                                  )
+                                  .map((attr) => (
+                                    <Button
+                                      key={attr.id}
+                                      variant={
+                                        formData.selectedAttributes.includes(
+                                          attr.id
+                                        )
+                                          ? "default"
+                                          : "outline"
+                                      }
+                                      size="sm"
+                                      onClick={() =>
+                                        handleAttributeToggle(attr.id)
+                                      }
+                                      className="rounded-full"
+                                    >
+                                      {attr.label}
+                                    </Button>
+                                  ))}
+                              </div>
+                            </div>
+                          ))}
+                      </div>
+
+                      <div className="mt-4 pt-4 border-t">
+                        <Label htmlFor="customAttributes">
+                          Can't find what you're looking for?
+                        </Label>
+                        <Textarea
+                          id="customAttributes"
+                          name="customAttributes"
+                          value={formData.customAttributes}
+                          onChange={handleInputChange}
+                          placeholder="Add your own custom attributes here..."
+                          className="mt-2"
+                        />
+                      </div>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -300,64 +406,73 @@ export function AddListings() {
 
               <div className="flex justify-between">
                 <Button type="submit">Publish Listing</Button>
-                <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
-                  <DialogTrigger asChild>
-                    <Button variant="outline">
-                      <Eye className="h-4 w-4 mr-2" />
-                      Preview Listing
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent className="max-w-3xl">
-                    <DialogHeader>
-                      <DialogTitle>Listing Preview</DialogTitle>
-                      <DialogDescription>
-                        This is how your listing will appear to potential buyers
-                      </DialogDescription>
-                    </DialogHeader>
-                    <div className="mt-4 space-y-4">
-                      <h2 className="text-2xl font-bold">
-                        {formData.title || "Your Property Title"}
-                      </h2>
-                      <p className="text-xl font-semibold">
-                        {formData.price
-                          ? `IDR ${parseInt(formData.price).toLocaleString()}`
-                          : "Price"}
-                      </p>
-                      <p>{formData.location || "Location"}</p>
-                      <div className="flex space-x-4">
-                        <span>{formData.bedrooms} Bedrooms</span>
-                        <span>{formData.bathrooms} Bathrooms</span>
-                        <span>{formData.propertyType}</span>
-                      </div>
-                      <p>
-                        {formData.description ||
-                          "Property description will appear here..."}
-                      </p>
-                      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                        {formData.images.map((image, index) => (
-                          <Image
-                            key={index}
-                            src={image}
-                            alt={`Property image ${index + 1}`}
-                            width={200}
-                            height={150}
-                            className="rounded-lg object-cover w-full h-36"
-                          />
-                        ))}
-                      </div>
-                      <h3 className="font-semibold">Special Attributes</h3>
-                      <p>
-                        {formData.specialAttributes ||
-                          "No special attributes specified"}
-                      </p>
-                    </div>
-                    <DialogFooter>
-                      <Button onClick={() => setPreviewOpen(false)}>
-                        Close Preview
+                <div className="flex gap-2">
+                  <Button variant="outline" asChild>
+                    <Link href="/routes/listing-promotion">
+                      <Upload className="h-4 w-4 mr-2" />
+                      Promote Listing
+                    </Link>
+                  </Button>
+                  <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
+                    <DialogTrigger asChild>
+                      <Button variant="outline">
+                        <Eye className="h-4 w-4 mr-2" />
+                        Preview Listing
                       </Button>
-                    </DialogFooter>
-                  </DialogContent>
-                </Dialog>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-3xl">
+                      <DialogHeader>
+                        <DialogTitle>Listing Preview</DialogTitle>
+                        <DialogDescription>
+                          This is how your listing will appear to potential
+                          buyers
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="mt-4 space-y-4">
+                        <h2 className="text-2xl font-bold">
+                          {formData.title || "Your Property Title"}
+                        </h2>
+                        <p className="text-xl font-semibold">
+                          {formData.price
+                            ? `IDR ${parseInt(formData.price).toLocaleString()}`
+                            : "Price"}
+                        </p>
+                        <p>{formData.location || "Location"}</p>
+                        <div className="flex space-x-4">
+                          <span>{formData.bedrooms} Bedrooms</span>
+                          <span>{formData.bathrooms} Bathrooms</span>
+                          <span>{formData.propertyType}</span>
+                        </div>
+                        <p>
+                          {formData.description ||
+                            "Property description will appear here..."}
+                        </p>
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                          {formData.images.map((image, index) => (
+                            <Image
+                              key={index}
+                              src={image}
+                              alt={`Property image ${index + 1}`}
+                              width={200}
+                              height={150}
+                              className="rounded-lg object-cover w-full h-36"
+                            />
+                          ))}
+                        </div>
+                        <h3 className="font-semibold">Special Attributes</h3>
+                        <p>
+                          {formData.customAttributes ||
+                            "No special attributes specified"}
+                        </p>
+                      </div>
+                      <DialogFooter>
+                        <Button onClick={() => setPreviewOpen(false)}>
+                          Close Preview
+                        </Button>
+                      </DialogFooter>
+                    </DialogContent>
+                  </Dialog>
+                </div>
               </div>
             </form>
           </TabsContent>
@@ -415,23 +530,7 @@ export function AddListings() {
           </TabsContent>
         </Tabs>
       </main>
-
-      <footer className="bg-primary text-primary-foreground py-8 mt-12">
-        <div className="container mx-auto text-center">
-          <p>&copy; 2024 Rumaku. All rights reserved.</p>
-          <div className="mt-4">
-            <Link href="/terms" className="hover:underline mr-4">
-              Terms of Service
-            </Link>
-            <Link href="/privacy" className="hover:underline mr-4">
-              Privacy Policy
-            </Link>
-            <Link href="/contact" className="hover:underline">
-              Contact Us
-            </Link>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

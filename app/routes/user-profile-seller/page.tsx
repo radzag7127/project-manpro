@@ -1,7 +1,7 @@
-'use client'
+"use client";
 
-import { UserAsSeller } from "@/app/Pages/5-User-Seller/User-Seller"
+import { UserAsSellers } from "@/app/Pages/15-PropOwnDashboard/PropOwnDashboard";
 
 export default function UserSellerPage() {
-  return <UserAsSeller/>
+  return <UserAsSellers />;
 }
