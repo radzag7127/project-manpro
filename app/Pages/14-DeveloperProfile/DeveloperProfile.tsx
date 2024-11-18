@@ -73,7 +73,7 @@ interface Developer {
 const developer: Developer = {
   id: "1",
   name: "PT Maju Jaya Development",
-  logo: "/placeholder.svg?height=100&width=100",
+  logo: "/dev1.jpg",
   description:
     "PT Maju Jaya Development is a leading property developer in Indonesia, specializing in creating innovative and sustainable residential and commercial projects. With a strong focus on quality and customer satisfaction, we have been transforming the urban landscape since 1995.",
   foundedYear: 1995,
@@ -89,7 +89,7 @@ const developer: Developer = {
       location: "Jakarta",
       type: "Residential",
       status: "Ongoing",
-      image: "/placeholder.svg?height=200&width=300",
+      image: "/prop1.jpg",
       completionPercentage: 75,
       totalUnits: 200,
       soldUnits: 150,
@@ -100,7 +100,7 @@ const developer: Developer = {
       location: "Bali",
       type: "Commercial",
       status: "Completed",
-      image: "/placeholder.svg?height=200&width=300",
+      image: "/prop2.jpg",
       completionPercentage: 100,
       totalUnits: 50,
       soldUnits: 50,
@@ -111,7 +111,7 @@ const developer: Developer = {
       location: "Bandung",
       type: "Residential",
       status: "Ongoing",
-      image: "/placeholder.svg?height=200&width=300",
+      image: "/prop3.jpg",
       completionPercentage: 40,
       totalUnits: 150,
       soldUnits: 60,
@@ -226,6 +226,12 @@ export function DeveloperProfiles() {
                 {developer.rating.toFixed(1)}
               </span>
             </div>
+            <Button variant="outline" asChild>
+              <Link href="/routes/rate-this">
+                <Star className="mr-2 h-4 w-4" />
+                Rate Developer
+              </Link>
+            </Button>
             <Button>Contact Developer</Button>
           </div>
         </div>

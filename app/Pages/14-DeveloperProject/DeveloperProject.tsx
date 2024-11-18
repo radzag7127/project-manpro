@@ -14,6 +14,10 @@ import {
   Plus,
   UserCircle,
   ChevronDown,
+  BarChart2,
+  ChartLine,
+  TrendingUp,
+  Target,
 } from "lucide-react";
 
 import {
@@ -37,7 +41,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { LineChart } from "@/components/ui/chart";
 
 interface Property {
   id: string;
@@ -132,25 +135,21 @@ const project: Project = {
   ],
 };
 
-const salesData = {
-  labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-  datasets: [
-    {
-      label: "Units Sold",
-      data: [10, 15, 25, 30, 35, 35],
-      borderColor: "hsl(var(--primary))",
-      backgroundColor: "hsl(var(--primary))",
-      tension: 0.4,
-    },
-    {
-      label: "Units Reserved",
-      data: [5, 8, 12, 15, 18, 20],
-      borderColor: "hsl(var(--secondary))",
-      backgroundColor: "hsl(var(--secondary))",
-      tension: 0.4,
-    },
-  ],
-};
+interface MonthlySales {
+  month: string;
+  sold: number;
+  reserved: number;
+  percentage: number;
+}
+
+const monthlySales: MonthlySales[] = [
+  { month: "Jan", sold: 10, reserved: 5, percentage: 75 },
+  { month: "Feb", sold: 15, reserved: 8, percentage: 82 },
+  { month: "Mar", sold: 25, reserved: 12, percentage: 88 },
+  { month: "Apr", sold: 30, reserved: 15, percentage: 90 },
+  { month: "May", sold: 35, reserved: 18, percentage: 92 },
+  { month: "Jun", sold: 35, reserved: 20, percentage: 95 },
+];
 
 export function DeveloperProjects() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -257,6 +256,44 @@ export function DeveloperProjects() {
           </CardContent>
         </Card>
 
+        <Card className="mb-8 bg-gradient-to-r from-primary/10 to-primary/5 border-primary/20">
+          <CardHeader>
+            <div className="flex justify-between items-center">
+              <div>
+                <CardTitle className="text-xl text-primary">
+                  Premium Analytics Dashboard
+                </CardTitle>
+                <CardDescription>
+                  Get advanced insights, market analysis, and detailed
+                  performance metrics
+                </CardDescription>
+              </div>
+              <Button className="bg-primary hover:bg-primary/90" asChild>
+                <Link href="/routes/developer-dashboard-premium">
+                  <BarChart2 className="mr-2 h-4 w-4" />
+                  View Premium Dashboard
+                </Link>
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+              <div className="flex items-center space-x-2">
+                <ChartLine className="h-4 w-4 text-primary" />
+                <span>Advanced Analytics</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <TrendingUp className="h-4 w-4 text-primary" />
+                <span>Market Trends</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Target className="h-4 w-4 text-primary" />
+                <span>Competitor Analysis</span>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -319,21 +356,59 @@ export function DeveloperProjects() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="h-[400px]">
-              <LineChart
-                data={salesData}
-                config={{
-                  "Units Sold": {
-                    label: "Units Sold",
-                    color: "hsl(var(--primary))",
-                  },
-                  "Units Reserved": {
-                    label: "Units Reserved",
-                    color: "hsl(var(--secondary))",
-                  },
-                }}
-                className="w-full h-full"
-              />
+            <div className="space-y-8">
+              {monthlySales.map((data) => (
+                <div key={data.month} className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <div className="flex-1">
+                      <div className="flex justify-between mb-1">
+                        <span className="text-sm font-medium">
+                          {data.month}
+                        </span>
+                        <span className="text-sm text-muted-foreground">
+                          {data.percentage}%
+                        </span>
+                      </div>
+                      <div className="flex gap-2 items-center">
+                        <Progress value={data.percentage} className="h-2" />
+                        <div className="flex gap-4 min-w-[100px]">
+                          <span className="text-sm font-medium text-primary">
+                            {data.sold} sold
+                          </span>
+                          <span className="text-sm font-medium text-secondary">
+                            {data.reserved} reserved
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-6 flex items-center justify-between border-t pt-4">
+              <div className="space-y-1">
+                <p className="text-sm font-medium">Total Sales Performance</p>
+                <div className="text-2xl font-bold">
+                  {monthlySales.reduce(
+                    (acc, curr) => acc + curr.sold + curr.reserved,
+                    0
+                  )}{" "}
+                  units
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <div className="flex items-center gap-2">
+                  <div className="h-3 w-3 rounded-full bg-primary" />
+                  <span className="text-sm text-muted-foreground">Sold</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="h-3 w-3 rounded-full bg-secondary" />
+                  <span className="text-sm text-muted-foreground">
+                    Reserved
+                  </span>
+                </div>
+              </div>
             </div>
           </CardContent>
         </Card>

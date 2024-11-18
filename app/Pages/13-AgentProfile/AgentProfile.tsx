@@ -85,7 +85,7 @@ const agent: Agent = {
       type: "Apartment",
       price: 15000000000,
       location: "Jakarta",
-      imageUrl: "/placeholder.svg?height=200&width=300",
+      imageUrl: "/prop1.jpg",
     },
     {
       id: "p2",
@@ -93,7 +93,7 @@ const agent: Agent = {
       type: "Villa",
       price: 8000000000,
       location: "Bali",
-      imageUrl: "/placeholder.svg?height=200&width=300",
+      imageUrl: "/prop2.jpg",
     },
     {
       id: "p3",
@@ -101,7 +101,7 @@ const agent: Agent = {
       type: "House",
       price: 12000000000,
       location: "Jakarta",
-      imageUrl: "/placeholder.svg?height=200&width=300",
+      imageUrl: "/prop3.jpg",
     },
   ],
   testimonials: [
@@ -214,14 +214,22 @@ export function AgentProfiles() {
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="flex justify-center space-x-4">
-                  <Button>
-                    <Phone className="h-4 w-4 mr-2" />
-                    Call
-                  </Button>
-                  <Button variant="outline">
-                    <Mail className="h-4 w-4 mr-2" />
-                    Email
+                <div className="flex flex-col space-y-4">
+                  <div className="flex justify-center space-x-4">
+                    <Button>
+                      <Phone className="h-4 w-4 mr-2" />
+                      Call
+                    </Button>
+                    <Button variant="outline">
+                      <Mail className="h-4 w-4 mr-2" />
+                      Email
+                    </Button>
+                  </div>
+                  <Button variant="outline" asChild className="w-full">
+                    <Link href="/routes/rate-this">
+                      <Star className="h-4 w-4 mr-2" />
+                      Rate This Agent
+                    </Link>
                   </Button>
                 </div>
               </CardContent>

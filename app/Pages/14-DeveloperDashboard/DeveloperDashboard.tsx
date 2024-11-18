@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   Building,
   ChevronRight,
@@ -99,6 +100,7 @@ const developer: Developer = {
 };
 
 export function DeveloperDashboards() {
+  const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredProjects = developer.projects.filter(
@@ -172,6 +174,13 @@ export function DeveloperDashboards() {
             </div>
           </div>
           <div className="flex gap-2">
+            <Button
+              variant="outline"
+              onClick={() => router.push("/routes/look-for-agents")}
+            >
+              <Users className="mr-2 h-4 w-4" />
+              Look for Agents
+            </Button>
             <Button asChild variant="outline">
               <Link href="/routes/developer-profile">Edit Profile</Link>
             </Button>

@@ -247,146 +247,179 @@ export function PropertyOwnerProfiles() {
       </header>
       <main className="container mx-auto py-8">
         <div className="flex flex-col md:flex-row justify-between items-start gap-8 mb-8">
-          <div className="flex items-center gap-4">
-            <Avatar className="h-24 w-24">
-              <AvatarImage
-                src={propertyOwner.avatar}
-                alt={propertyOwner.name}
-              />
-              <AvatarFallback>{propertyOwner.name.charAt(0)}</AvatarFallback>
-            </Avatar>
-            <div>
-              <h1 className="text-3xl font-bold">{propertyOwner.name}</h1>
-              <p className="text-muted-foreground">
-                Member since{" "}
-                {new Date(propertyOwner.joinDate).toLocaleDateString()}
-              </p>
-            </div>
-          </div>
-          <Button>
-            <MessageCircle className="mr-2 h-4 w-4" /> Contact Owner
-          </Button>
-        </div>
-
-        <Card className="mb-8">
-          <CardHeader>
-            <CardTitle>About {propertyOwner.name}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p>{propertyOwner.bio}</p>
-          </CardContent>
-        </Card>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
-                Total Properties
-              </CardTitle>
-              <Building className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">
-                {propertyOwner.propertiesCount}
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
-                Average Rating
-              </CardTitle>
-              <Star className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">
-                {propertyOwner.averageRating.toFixed(1)}
-              </div>
-              <Progress
-                value={propertyOwner.averageRating * 20}
-                className="mt-2"
-              />
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
-                Response Rate
-              </CardTitle>
-              <MessageCircle className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">
-                {propertyOwner.responseRate}%
-              </div>
-              <Progress value={propertyOwner.responseRate} className="mt-2" />
-            </CardContent>
-          </Card>
-        </div>
-
-        <Tabs defaultValue="properties" className="mb-8">
-          <TabsList>
-            <TabsTrigger value="properties">Properties</TabsTrigger>
-            <TabsTrigger value="reviews">Reviews</TabsTrigger>
-          </TabsList>
-          <TabsContent value="properties">
-            <Card>
+          <div className="flex-1">
+            <Card className="mb-4">
               <CardHeader>
-                <CardTitle>Properties by {propertyOwner.name}</CardTitle>
+                <div className="flex justify-between items-center">
+                  <div>
+                    <CardTitle className="text-2xl">
+                      {propertyOwner.name}
+                    </CardTitle>
+                    <CardDescription>Property Owner</CardDescription>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <Button variant="outline" asChild>
+                      <Link href="/routes/rate-this">
+                        <Star className="mr-2 h-4 w-4" />
+                        Rate Owner
+                      </Link>
+                    </Button>
+                    <Button>Contact Owner</Button>
+                  </div>
+                </div>
               </CardHeader>
               <CardContent>
-                <div className="mb-4">
-                  <Input
-                    type="text"
-                    placeholder="Search properties..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                  />
+                <div className="flex items-center gap-4">
+                  <Avatar className="h-24 w-24">
+                    <AvatarImage
+                      src={propertyOwner.avatar}
+                      alt={propertyOwner.name}
+                    />
+                    <AvatarFallback>
+                      {propertyOwner.name.charAt(0)}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <h1 className="text-3xl font-bold">{propertyOwner.name}</h1>
+                    <p className="text-muted-foreground">
+                      Member since{" "}
+                      {new Date(propertyOwner.joinDate).toLocaleDateString()}
+                    </p>
+                  </div>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {filteredProperties.map((property) => (
-                    <PropertyCard key={property.id} property={property} />
-                  ))}
+
+                <Card className="mb-8">
+                  <CardHeader>
+                    <CardTitle>About {propertyOwner.name}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p>{propertyOwner.bio}</p>
+                  </CardContent>
+                </Card>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                  <Card>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                      <CardTitle className="text-sm font-medium">
+                        Total Properties
+                      </CardTitle>
+                      <Building className="h-4 w-4 text-muted-foreground" />
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-2xl font-bold">
+                        {propertyOwner.propertiesCount}
+                      </div>
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                      <CardTitle className="text-sm font-medium">
+                        Average Rating
+                      </CardTitle>
+                      <Star className="h-4 w-4 text-muted-foreground" />
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-2xl font-bold">
+                        {propertyOwner.averageRating.toFixed(1)}
+                      </div>
+                      <Progress
+                        value={propertyOwner.averageRating * 20}
+                        className="mt-2"
+                      />
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                      <CardTitle className="text-sm font-medium">
+                        Response Rate
+                      </CardTitle>
+                      <MessageCircle className="h-4 w-4 text-muted-foreground" />
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-2xl font-bold">
+                        {propertyOwner.responseRate}%
+                      </div>
+                      <Progress
+                        value={propertyOwner.responseRate}
+                        className="mt-2"
+                      />
+                    </CardContent>
+                  </Card>
                 </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-          <TabsContent value="reviews">
-            <Card>
-              <CardHeader>
-                <CardTitle>Reviews</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {reviews.map((review) => (
-                    <Card key={review.id}>
+
+                <Tabs defaultValue="properties" className="mb-8">
+                  <TabsList>
+                    <TabsTrigger value="properties">Properties</TabsTrigger>
+                    <TabsTrigger value="reviews">Reviews</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="properties">
+                    <Card>
                       <CardHeader>
-                        <div className="flex items-center justify-between">
-                          <CardTitle className="text-lg">
-                            {review.reviewerName}
-                          </CardTitle>
-                          <div className="flex items-center">
-                            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400 mr-1" />
-                            <span>{review.rating.toFixed(1)}</span>
-                          </div>
-                        </div>
-                        <CardDescription>
-                          {review.propertyTitle}
-                        </CardDescription>
+                        <CardTitle>
+                          Properties by {propertyOwner.name}
+                        </CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-sm mb-2">{review.comment}</p>
-                        <p className="text-sm text-muted-foreground">
-                          Date: {new Date(review.date).toLocaleDateString()}
-                        </p>
+                        <div className="mb-4">
+                          <Input
+                            type="text"
+                            placeholder="Search properties..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                          />
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                          {filteredProperties.map((property) => (
+                            <PropertyCard
+                              key={property.id}
+                              property={property}
+                            />
+                          ))}
+                        </div>
                       </CardContent>
                     </Card>
-                  ))}
-                </div>
+                  </TabsContent>
+                  <TabsContent value="reviews">
+                    <Card>
+                      <CardHeader>
+                        <CardTitle>Reviews</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="space-y-4">
+                          {reviews.map((review) => (
+                            <Card key={review.id}>
+                              <CardHeader>
+                                <div className="flex items-center justify-between">
+                                  <CardTitle className="text-lg">
+                                    {review.reviewerName}
+                                  </CardTitle>
+                                  <div className="flex items-center">
+                                    <Star className="h-4 w-4 fill-yellow-400 text-yellow-400 mr-1" />
+                                    <span>{review.rating.toFixed(1)}</span>
+                                  </div>
+                                </div>
+                                <CardDescription>
+                                  {review.propertyTitle}
+                                </CardDescription>
+                              </CardHeader>
+                              <CardContent>
+                                <p className="text-sm mb-2">{review.comment}</p>
+                                <p className="text-sm text-muted-foreground">
+                                  Date:{" "}
+                                  {new Date(review.date).toLocaleDateString()}
+                                </p>
+                              </CardContent>
+                            </Card>
+                          ))}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
+                </Tabs>
               </CardContent>
             </Card>
-          </TabsContent>
-        </Tabs>
+          </div>
+        </div>
       </main>
 
       <footer className="bg-primary text-primary-foreground py-8 mt-12">

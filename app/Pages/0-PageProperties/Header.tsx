@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { UserCircle, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { UserCircle, ChevronDown } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,

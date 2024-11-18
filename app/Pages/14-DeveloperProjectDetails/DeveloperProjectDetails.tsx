@@ -11,6 +11,7 @@ import {
   Edit,
   Save,
   Megaphone,
+  Users,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";

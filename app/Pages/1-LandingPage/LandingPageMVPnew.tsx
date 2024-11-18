@@ -110,9 +110,7 @@ export function LandingPageComponentMVPnew() {
 
   const handleSearch = (e: FormEvent) => {
     e.preventDefault();
-    router.push(
-      `/routes/search-results?location=${searchLocation}&type=${propertyType}&price=${priceRange}`
-    );
+    router.push(`/routes/listings`);
   };
 
   return (
@@ -261,10 +259,7 @@ export function LandingPageComponentMVPnew() {
                     </p>
                   </CardContent>
                   <CardFooter>
-                    <Link
-                      href={`/routes/property-details/${property.id}`}
-                      passHref
-                    >
+                    <Link href={`/routes/listing-details`} passHref>
                       <Button variant="outline" className="w-full">
                         View Details
                       </Button>
