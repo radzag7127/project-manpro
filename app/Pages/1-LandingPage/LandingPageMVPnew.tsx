@@ -159,7 +159,7 @@ export function LandingPageComponentMVPnew() {
             objectFit="cover"
             className="absolute inset-0 mix-blend-overlay"
           />
-          <div className="container mx-auto text-center relative z-10">
+          <div className="container mx-auto text-center relative z-10 text-black">
             <h2 className="text-4xl font-bold mb-4">
               Find Your Dream Property with Rumaku
             </h2>

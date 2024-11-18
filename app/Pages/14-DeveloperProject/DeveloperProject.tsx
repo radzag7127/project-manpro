@@ -41,6 +41,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Footer } from "../0-PageProperties/Footer";
 
 interface Property {
   id: string;
@@ -543,23 +544,7 @@ export function DeveloperProjects() {
           </Button>
         </div>
       </main>
-
-      <footer className="bg-primary text-primary-foreground py-8 mt-12">
-        <div className="container mx-auto text-center">
-          <p>&copy; 2024 Rumaku. All rights reserved.</p>
-          <div className="mt-4">
-            <Link href="/terms" className="hover:underline mr-4">
-              Terms of Service
-            </Link>
-            <Link href="/privacy" className="hover:underline mr-4">
-              Privacy Policy
-            </Link>
-            <Link href="/contact" className="hover:underline">
-              Contact Us
-            </Link>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

@@ -83,6 +83,11 @@ export function TermsAndPolicies() {
                       We do not guarantee the accuracy or completeness of any
                       listing.
                     </li>
+                    <li>
+                      We will gather information from the the listings to train
+                      our data model to improve the quality of the listings and
+                      dashboard data features.
+                    </li>
                   </ul>
                 </section>
 

@@ -215,39 +215,41 @@ export function ListingDetailsInfoMVPs() {
 
           {/* Developer Profile */}
           <Card className="mb-12">
-            <CardHeader>
-              <CardTitle>About the Developer</CardTitle>
-            </CardHeader>
-            <CardContent className="flex items-start space-x-4">
-              <Avatar className="h-20 w-20">
-                <AvatarImage
-                  src={listingData.developer.image}
-                  alt={listingData.developer.name}
-                />
-                <AvatarFallback>
-                  {listingData.developer.name.charAt(0)}
-                </AvatarFallback>
-              </Avatar>
-              <div>
-                <h3 className="text-xl font-semibold">
-                  {listingData.developer.name}
-                </h3>
-                <p className="text-muted-foreground mb-2">
-                  {listingData.developer.company}
-                </p>
-                <p>{listingData.developer.bio}</p>
-              </div>
-            </CardContent>
-            <CardFooter className="flex justify-between">
-              <Button variant="outline">
-                <Phone className="h-4 w-4 mr-2" />
-                Call Developer
-              </Button>
-              <Button variant="outline">
-                <Mail className="h-4 w-4 mr-2" />
-                Email Developer
-              </Button>
-            </CardFooter>
+            <Link href="/routes/developer-profile">
+              <CardHeader>
+                <CardTitle>About the Developer</CardTitle>
+              </CardHeader>
+              <CardContent className="flex items-start space-x-4">
+                <Avatar className="h-20 w-20">
+                  <AvatarImage
+                    src={listingData.developer.image}
+                    alt={listingData.developer.name}
+                  />
+                  <AvatarFallback>
+                    {listingData.developer.name.charAt(0)}
+                  </AvatarFallback>
+                </Avatar>
+                <div>
+                  <h3 className="text-xl font-semibold">
+                    {listingData.developer.name}
+                  </h3>
+                  <p className="text-muted-foreground mb-2">
+                    {listingData.developer.company}
+                  </p>
+                  <p>{listingData.developer.bio}</p>
+                </div>
+              </CardContent>
+              <CardFooter className="flex justify-between">
+                <Button variant="outline">
+                  <Phone className="h-4 w-4 mr-2" />
+                  Call Developer
+                </Button>
+                <Button variant="outline">
+                  <Mail className="h-4 w-4 mr-2" />
+                  Email Developer
+                </Button>
+              </CardFooter>
+            </Link>
           </Card>
 
           {/* Highlighted Reviews */}

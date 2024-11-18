@@ -35,6 +35,7 @@ import HeaderComponents from "../0-PageProperties/Header";
 import { Footer } from "../0-PageProperties/Footer";
 import { LegalCenterFirstPages } from "../00-LegalCenter/LegalCenter1";
 import Image from "next/image";
+import LegalChatBot from "@/app/components/LegalChatBot";
 
 interface LegalArticle {
   id: string;
@@ -589,6 +590,7 @@ export function LegalCenters() {
         </main>
         <Footer />
       </div>
+      <LegalChatBot />
     </>
   );
 }

@@ -116,7 +116,7 @@ export default function LandingPage() {
       </header>
       <main>
         {/* Hero Section */}
-        <section className="bg-gradient-to-r from-primary to-primary-foreground text-white py-20">
+        <section className="bg-gradient-to-r from-primary to-primary-foreground text-black py-20">
           <div className="container mx-auto text-center">
             <h2 className="text-4xl font-bold mb-4">
               Find Your Dream Property with Rumaku

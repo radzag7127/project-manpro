@@ -128,7 +128,7 @@ export function HomepageUserAnew() {
             priority
             className="absolute inset-0 mix-blend-overlay object-cover w-full h-full"
           />
-          <div className="container mx-auto text-center relative z-10">
+          <div className="container mx-auto text-center relative z-10 text-black">
             <h2 className="text-4xl font-bold mb-4">
               Find Your Dream Property with Rumaku
             </h2>
