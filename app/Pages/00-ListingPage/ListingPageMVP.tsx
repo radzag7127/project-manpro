@@ -51,6 +51,7 @@ const paidListings = [
     area: 500,
     image: "/prop1.jpg",
     isPaid: true,
+    specialFeatures: ["Feng Shui Aligned", "Pool", "Smart Home"],
   },
   {
     id: 2,
@@ -61,6 +62,7 @@ const paidListings = [
     startingPrice: 800000000,
     image: "/prop2.jpg",
     isPaid: true,
+    specialFeatures: ["Kiblat Direction", "Feng Shui Aligned", "Garden"],
   },
   {
     id: 3,
@@ -73,6 +75,11 @@ const paidListings = [
     area: 120,
     image: "/prop3.jpg",
     isPaid: true,
+    specialFeatures: [
+      "Expert Certified",
+      "Feng Shui Aligned",
+      "Kiblat Direction",
+    ],
   },
 ];
 
@@ -88,6 +95,7 @@ const unpaidListings = [
     area: 150,
     image: "/prop4.jpg",
     isPaid: false,
+    specialFeatures: ["Expert Certified", "Kiblat Direction"],
   },
   {
     id: 5,
@@ -98,6 +106,7 @@ const unpaidListings = [
     startingPrice: 3000000000,
     image: "/prop5.jpg",
     isPaid: false,
+    specialFeatures: ["Expert Certified", "Kiblat Direction"],
   },
   {
     id: 6,
@@ -108,6 +117,7 @@ const unpaidListings = [
     area: 1000,
     image: "/prop1.jpg",
     isPaid: false,
+    specialFeatures: ["Expert Certified", "Kiblat Direction"],
   },
 ];
 
@@ -183,6 +193,30 @@ export function ListingPageMVPs() {
     );
   };
 
+  const filterListings = (listings: any[]) => {
+    return listings.filter((listing) => {
+      const specialFeatureFilters = selectedFilters.filter((filter) =>
+        [
+          "Feng Shui Aligned",
+          "Kiblat Direction",
+          "Expert Certified",
+          "Pool",
+          "Garden",
+          "Smart Home",
+        ].includes(filter)
+      );
+
+      if (specialFeatureFilters.length > 0) {
+        const hasSelectedFeatures = specialFeatureFilters.some((feature) =>
+          listing.specialFeatures?.includes(feature)
+        );
+        if (!hasSelectedFeatures) return false;
+      }
+
+      return true;
+    });
+  };
+
   const renderListing = (listing: any) => (
     <Link
       href={
@@ -241,6 +275,15 @@ export function ListingPageMVPs() {
                 })}
               </p>
             </>
+          )}
+          {listing.specialFeatures && listing.specialFeatures.length > 0 && (
+            <div className="mt-2 flex flex-wrap gap-1">
+              {listing.specialFeatures.map((feature: string) => (
+                <Badge key={feature} variant="secondary" className="text-xs">
+                  {feature}
+                </Badge>
+              ))}
+            </div>
           )}
           {listing.isPaid && <Badge className="mt-2">Featured</Badge>}
         </CardContent>
@@ -486,48 +529,37 @@ export function ListingPageMVPs() {
           </div>
 
           <div className="md:col-span-3">
-            <Tabs defaultValue="listings" className="w-full">
-              <TabsList>
-                <TabsTrigger value="listings">Listings</TabsTrigger>
+            <Tabs defaultValue="all" className="w-full">
+              <TabsList className="mb-4">
+                <TabsTrigger value="all">All Listings</TabsTrigger>
+                <TabsTrigger value="properties">Properties</TabsTrigger>
+                <TabsTrigger value="projects">Projects</TabsTrigger>
                 <TabsTrigger value="profiles">Profiles</TabsTrigger>
               </TabsList>
-              <TabsContent value="listings">
-                <div className="space-y-8">
-                  <section>
-                    <h2 className="text-xl font-semibold mb-4">
-                      Featured Listings
-                    </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      {paidListings.map(renderListing)}
-                    </div>
-                  </section>
-                  <section>
-                    <h2 className="text-xl font-semibold mb-4">All Listings</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      {unpaidListings.map(renderListing)}
-                    </div>
-                  </section>
+              <TabsContent value="all">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {filterListings([...paidListings, ...unpaidListings]).map(
+                    renderListing
+                  )}
+                </div>
+              </TabsContent>
+              <TabsContent value="properties">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {filterListings([...paidListings, ...unpaidListings])
+                    .filter((listing) => listing.type === "property")
+                    .map(renderListing)}
+                </div>
+              </TabsContent>
+              <TabsContent value="projects">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {filterListings([...paidListings, ...unpaidListings])
+                    .filter((listing) => listing.type === "project")
+                    .map(renderListing)}
                 </div>
               </TabsContent>
               <TabsContent value="profiles">
-                <div className="space-y-8">
-                  <section>
-                    <h2 className="text-xl font-semibold mb-4">
-                      Featured Profiles
-                    </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                      {profileAds.map(renderProfileAd)}
-                    </div>
-                    <div className="space-y-4">
-                      {profiles.filter((p) => p.isPaid).map(renderProfile)}
-                    </div>
-                  </section>
-                  <section>
-                    <h2 className="text-xl font-semibold mb-4">All Profiles</h2>
-                    <div className="space-y-4">
-                      {profiles.filter((p) => !p.isPaid).map(renderProfile)}
-                    </div>
-                  </section>
+                <div className="grid grid-cols-1 gap-4">
+                  {profiles.map((profile) => renderProfile(profile))}
                 </div>
               </TabsContent>
             </Tabs>

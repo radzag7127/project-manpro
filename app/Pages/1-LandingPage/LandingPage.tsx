@@ -82,7 +82,13 @@ export default function LandingPage() {
     <>
       <header className="bg-primary text-primary-foreground py-4">
         <div className="container mx-auto flex justify-between items-center">
-          <Link href="/" className="text-2xl font-bold">
+          <Link href="/" className="text-2xl font-bold flex items-center gap-2">
+            <Image
+              src="/RumakuLogo.png"
+              alt="Rumaku Logo"
+              width={32}
+              height={32}
+            />
             Rumaku
           </Link>
           <nav>
@@ -93,12 +99,12 @@ export default function LandingPage() {
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="hover:underline">
+                <Link href="/routes/about-us" className="hover:underline">
                   About
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:underline">
+                <Link href="/routes/contact" className="hover:underline">
                   Contact
                 </Link>
               </li>
@@ -118,14 +124,13 @@ export default function LandingPage() {
         {/* Hero Section */}
         <section className="bg-gradient-to-r from-primary to-primary-foreground text-black py-20">
           <div className="container mx-auto text-center">
-            <h2 className="text-4xl font-bold mb-4">
+            <h2 className="text-4xl font-bold mb-4 text-black/90 drop-shadow-lg">
               Find Your Dream Property with Rumaku
             </h2>
-            <p className="text-xl mb-8">
+            <p className="text-xl mb-8 text-black/80 drop-shadow-md">
               Fair exposure for all property owners, endless possibilities for
               buyers.
             </p>
-
             {/* Search Bar */}
             <div className="bg-white p-4 rounded-lg shadow-lg flex flex-wrap gap-4 justify-center items-center">
               <form

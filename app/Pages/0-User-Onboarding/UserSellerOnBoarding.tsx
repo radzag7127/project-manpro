@@ -21,7 +21,13 @@ export function OnBoardingsPage() {
     <div className="min-h-screen bg-background">
       <header className="bg-primary text-primary-foreground py-4">
         <div className="container mx-auto flex justify-between items-center">
-          <Link href="/" className="text-2xl font-bold">
+          <Link href="/" className="text-2xl font-bold flex items-center gap-2">
+            <Image
+              src="/RumakuLogo.png"
+              alt="Rumaku Logo"
+              width={32}
+              height={32}
+            />
             Rumaku
           </Link>
           <nav>
@@ -32,12 +38,12 @@ export function OnBoardingsPage() {
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="hover:underline">
+                <Link href="/routes-about" className="hover:underline">
                   About
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:underline">
+                <Link href="/routes/contact" className="hover:underline">
                   Contact
                 </Link>
               </li>

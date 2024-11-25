@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import {
   Card,
   CardContent,
@@ -80,6 +81,23 @@ export function PromoteListingComponents() {
 
   return (
     <div className="container mx-auto py-8">
+      <header className="bg-primary text-primary-foreground py-4">
+        <div className="container mx-auto flex justify-between items-center">
+          <Link
+            href="/routes/promotions"
+            className="text-2xl font-bold flex items-center gap-2"
+          >
+            <Image
+              src="/RumakuLogo.png"
+              alt="Rumaku Logo"
+              width={32}
+              height={32}
+            />
+            Rumaku
+          </Link>
+          {/* Rest of the nav */}
+        </div>
+      </header>
       <h1 className="text-3xl font-bold mb-6">Promote Your Listing</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <Card>

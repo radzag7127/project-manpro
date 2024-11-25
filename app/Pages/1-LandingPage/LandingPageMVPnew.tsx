@@ -118,7 +118,16 @@ export function LandingPageComponentMVPnew() {
       <header className="bg-primary text-primary-foreground py-4">
         <div className="container mx-auto flex justify-between items-center">
           <Link href="/" className="text-2xl font-bold">
-            Rumaku
+            <div className="flex items-center gap-2">
+              <Image
+                src="/RumakuLogo.png"
+                alt="Rumaku Logo"
+                width={32}
+                height={32}
+                className="object-contain"
+              />
+              Rumaku
+            </div>
           </Link>
           <nav>
             <ul className="flex space-x-4">
@@ -128,12 +137,12 @@ export function LandingPageComponentMVPnew() {
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="hover:underline">
+                <Link href="/routes/about-us" className="hover:underline">
                   About
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:underline">
+                <Link href="/routes/contact" className="hover:underline">
                   Contact
                 </Link>
               </li>
@@ -153,14 +162,14 @@ export function LandingPageComponentMVPnew() {
         {/* Hero Section */}
         <section className="relative bg-gradient-to-r from-primary to-primary-foreground text-white py-20">
           <Image
-            src="/prop1.jpg"
+            src="/BackgroundNew.png"
             alt="Jakarta Skyline"
             layout="fill"
             objectFit="cover"
             className="absolute inset-0 mix-blend-overlay"
           />
           <div className="container mx-auto text-center relative z-10 text-black">
-            <h2 className="text-4xl font-bold mb-4">
+            <h2 className="text-6xl font-bold mb-4">
               Find Your Dream Property with Rumaku
             </h2>
             <p className="text-xl mb-8">

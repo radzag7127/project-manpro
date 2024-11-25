@@ -102,12 +102,12 @@ export function AgentLists() {
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="hover:underline">
+                <Link href="/routes/about" className="hover:underline">
                   About
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:underline">
+                <Link href="/routes/contact" className="hover:underline">
                   Contact
                 </Link>
               </li>
@@ -191,7 +191,7 @@ export function AgentLists() {
             <Link href="/privacy" className="hover:underline mr-4">
               Privacy Policy
             </Link>
-            <Link href="/contact" className="hover:underline">
+            <Link href="/routes/contact" className="hover:underline">
               Contact Us
             </Link>
           </div>

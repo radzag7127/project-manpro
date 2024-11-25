@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Building,
   MessageSquare,
@@ -148,7 +149,16 @@ export function AgentDashboards() {
     <div className="min-h-screen bg-background">
       <header className="bg-primary text-primary-foreground py-4">
         <div className="container mx-auto flex justify-between items-center">
-          <Link href="/routes/user-page" className="text-2xl font-bold">
+          <Link
+            href="/routes/agent-dashboard"
+            className="text-2xl font-bold flex items-center gap-2"
+          >
+            <Image
+              src="/RumakuLogo.png"
+              alt="Rumaku Logo"
+              width={32}
+              height={32}
+            />
             Rumaku
           </Link>
           <nav>
@@ -412,7 +422,7 @@ export function AgentDashboards() {
             <Link href="/privacy" className="hover:underline mr-4">
               Privacy Policy
             </Link>
-            <Link href="/contact" className="hover:underline">
+            <Link href="/routes/contact" className="hover:underline">
               Contact Us
             </Link>
           </div>

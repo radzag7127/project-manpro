@@ -111,7 +111,7 @@ export default function PropertyDetailPage() {
 
   return (
     <div className="min-h-screen bg-background">
-    <HeaderComponents/>
+      <HeaderComponents />
       <main className="container mx-auto py-8">
         <h1 className="text-3xl font-bold mb-4">{property.title}</h1>
         <p className="text-xl font-semibold mb-8">
@@ -278,7 +278,7 @@ export default function PropertyDetailPage() {
           </CardContent>
         </Card>
       </main>
-    <Footer/>
+      <Footer />
     </div>
   );
 }

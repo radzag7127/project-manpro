@@ -20,19 +20,19 @@ const teamMembers = [
     name: "Jane Doe",
     role: "CEO & Founder",
     bio: "With over 15 years in real estate, Jane founded Rumaku to create a fair platform for all property owners.",
-    imageUrl: "/placeholder.svg?height=300&width=300" as string,
+    imageUrl: "/female1.jpg" as string,
   },
   {
     name: "John Smith",
     role: "CTO",
     bio: "John brings 10 years of tech expertise, ensuring Rumaku stays at the forefront of proptech innovation.",
-    imageUrl: "/placeholder.svg?height=300&width=300" as string,
+    imageUrl: "/male1.jpg" as string,
   },
   {
     name: "Alice Johnson",
     role: "Head of Operations",
     bio: "Alice's background in property management helps Rumaku deliver exceptional service to all users.",
-    imageUrl: "/placeholder.svg?height=300&width=300" as string,
+    imageUrl: "/female2.jpg" as string,
   },
 ];
 
@@ -68,7 +68,15 @@ export function AboutUs() {
     <div className="min-h-screen bg-background">
       <HeaderComponents />
       <main className="container mx-auto py-8">
-        <h1 className="text-4xl font-bold mb-8 text-center">About Rumaku</h1>
+        <div className="flex items-center justify-center gap-2 mb-8">
+          <Image
+            src="/RumakuLogo.png"
+            alt="Rumaku Logo"
+            width={48}
+            height={48}
+          />
+          <h1 className="text-4xl font-bold">About Rumaku</h1>
+        </div>
 
         {/* Company History and Mission */}
         <section className="mb-16">
@@ -93,7 +101,7 @@ export function AboutUs() {
             </div>
             <div className="relative h-64 md:h-full">
               <Image
-                src="/placeholder.svg?height=400&width=600"
+                src="/BackgroundNew.png"
                 alt="Rumaku Office"
                 layout="fill"
                 objectFit="cover"

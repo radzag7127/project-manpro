@@ -174,7 +174,7 @@ export function LegalCenterSecondPages() {
             <Link href="/privacy" className="hover:underline mr-4">
               Privacy Policy
             </Link>
-            <Link href="/contact" className="hover:underline">
+            <Link href="/routes/contact" className="hover:underline">
               Contact Us
             </Link>
           </div>

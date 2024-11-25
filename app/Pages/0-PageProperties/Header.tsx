@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { UserCircle, ChevronDown } from "lucide-react";
 import {
@@ -17,7 +18,16 @@ export default function HeaderComponent() {
   return (
     <header className="bg-primary text-primary-foreground py-4">
       <div className="container mx-auto flex justify-between items-center">
-        <Link href="/routes/user-page" className="text-2xl font-bold">
+        <Link
+          href="/routes/user-page"
+          className="text-2xl font-bold flex items-center gap-2"
+        >
+          <Image
+            src="/RumakuLogo.png"
+            alt="Rumaku Logo"
+            width={32}
+            height={32}
+          />
           Rumaku
         </Link>
         <nav>

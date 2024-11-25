@@ -25,6 +25,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import Image from "next/image";
 
 interface LegalSectionProps {
   title: string;
@@ -163,7 +164,15 @@ export function LegalCenterFirstPages() {
     <div className="min-h-screen bg-background">
       <header className="bg-primary text-primary-foreground py-6">
         <div className="container mx-auto px-4">
-          <h1 className="text-3xl font-bold mb-2">Rumaku Legal Center</h1>
+          <div className="flex items-center gap-2 mb-2">
+            <Image
+              src="/RumakuLogo.png"
+              alt="Rumaku Logo"
+              width={40}
+              height={40}
+            />
+            <h1 className="text-3xl font-bold">Rumaku Legal Center</h1>
+          </div>
           <p className="text-xl">
             Your guide to property laws and regulations in Indonesia
           </p>

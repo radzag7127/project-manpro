@@ -51,6 +51,7 @@ import {
 } from "@/components/ui/table";
 import HeaderComponent from "../0-PageProperties/Header";
 import { Footer } from "../0-PageProperties/Footer";
+import Link from "next/link";
 
 // Mock data
 const overviewData = {
@@ -413,7 +414,9 @@ export function DeveloperDataPremiums() {
             </CardDescription>
           </CardHeader>
           <CardFooter>
-            <Button>Explore Premium Services</Button>
+            <Link href="/routes/premium-payment-page">
+              <Button>Explore Premium Services</Button>
+            </Link>
           </CardFooter>
         </Card>
       </div>

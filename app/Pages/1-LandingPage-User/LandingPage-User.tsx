@@ -121,7 +121,7 @@ export function HomepageUserAnew() {
         {/* Hero Section */}
         <section className="relative bg-gradient-to-r from-primary to-primary-foreground text-white py-20">
           <Image
-            src="/prop1.jpg"
+            src="/BackgroundNew.png"
             alt="Featured Property"
             width={1920}
             height={1080}
@@ -129,7 +129,7 @@ export function HomepageUserAnew() {
             className="absolute inset-0 mix-blend-overlay object-cover w-full h-full"
           />
           <div className="container mx-auto text-center relative z-10 text-black">
-            <h2 className="text-4xl font-bold mb-4">
+            <h2 className="text-6xl font-bold mb-4">
               Find Your Dream Property with Rumaku
             </h2>
             <p className="text-xl mb-8">
@@ -305,7 +305,7 @@ export function HomepageUserAnew() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
               <div>
                 <Image
-                  src="/prop4.jpg"
+                  src="/BackgroundNew.png"
                   alt="Fair Exposure Illustration"
                   width={600}
                   height={400}

@@ -108,11 +108,11 @@ export function ContactUs() {
             <div className="mt-8">
               <h3 className="text-xl font-semibold mb-4">Our Location</h3>
               <Image
-                src="/placeholder.svg?height=300&width=500"
+                src="/map.png"
                 alt="Rumaku Office Location"
                 width={500}
                 height={300}
-                className="w-full rounded-lg shadow-lg"
+                className="w-full rounded-lg shadow-lg object-cover"
               />
             </div>
           </div>
